@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday Bhaiya & Aditi! 🎮🎉</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-color: #0b0914; 
+            --accent-color: #ff5e7e; 
+            --accent-blue: #33cdff;
+            --text-color: #ffffff;
+            --gradient: linear-gradient(135deg, #ff5e7e, #ff9233);
+            --gradient-blue: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255, 94, 126, 0.15) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 70%, rgba(51, 205, 255, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            width: 100vw;
+        }
+
+        /* Nav Bar - Mobile Friendly */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            background: rgba(11, 9, 20, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            font-weight: 700;
+            color: var(--accent-color);
+            white-space: nowrap;
+        }
+
+        .music-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: clamp(0.75rem, 3vw, 0.85rem);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        /* Page Section Master Layout */
+        .page-section {
+            display: none;
+            min-height: 100vh;
+            padding: 90px 5% 40px 5%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .page-section.active {
+            display: flex;
+        }
+
+        .action-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 94, 126, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 18px;
+            touch-action: manipulation;
+        }
+
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* BALLOON CLICKER ZONE */
+        .balloon-clicker-zone { text-align: center; width: 100%; }
+        .balloon-target {
+            width: clamp(100px, 30vw, 120px); 
+            height: clamp(120px, 36vw, 145px); 
+            background: #ff5e7e;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            margin: 20px auto; cursor: pointer; position: relative;
+            transition: transform 0.1s ease;
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.3), 0 10px 20px rgba(255, 94, 126, 0.4);
+            touch-action: manipulation;
+        }
+        .balloon-target::after {
+            content: ''; position: absolute; bottom: -8px; left: 50%;
+            transform: translateX(-50%); border-left: 7px solid transparent;
+            border-right: 7px solid transparent; border-bottom: 10px solid #ff5e7e;
+        }
+        .click-counter { font-size: clamp(1.1rem, 4vw, 1.4rem); color: #ff9233; margin-top: 15px; font-weight: bold; }
+
+        /* INTRO CONTAINER - DUAL PHOTOS */
+        .intro-container { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; max-width: 900px; }
+        .dual-photos { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; width: 100%; }
+        
+        .intro-photo-wrapper { 
+            opacity: 0; 
+            transform: scale(0.8) rotate(-2deg); 
+            animation: fadeInPhoto 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+            animation-delay: 0.3s;
+            max-width: 45%;
+        }
+        .intro-photo-wrapper.right { 
+            animation-delay: 0.6s; 
+            transform: scale(0.8) rotate(2deg); 
+        }
+
+        .intro-photo-frame { 
+            width: clamp(140px, 40vw, 220px); 
+            height: clamp(190px, 55vw, 300px); 
+            border-radius: 16px; 
+            overflow: hidden; 
+            border: 3px solid rgba(255, 94, 126, 0.5); 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); 
+            position: relative; 
+            margin: 0 auto;
+        }
+        .intro-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .person-tag { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.75); padding: 4px 10px; border-radius: 12px; font-size: clamp(0.7rem, 2.5vw, 0.85rem); border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; }
+        
+        .intro-text-wrapper h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 6vw, 3rem); margin-bottom: 12px; line-height: 1.25; opacity: 0; transform: translateY(30px); animation: fadeInUpText 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: 1.2s; }
+        .intro-text-wrapper h1 span.pink { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .intro-text-wrapper h1 span.blue { background: var(--gradient-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .intro-text-wrapper p { font-size: clamp(0.9rem, 3.2vw, 1.15rem); color: #d1d1d6; margin-bottom: 20px; max-width: 750px; line-height: 1.5; opacity: 0; animation: fadeInTextSimple 1.5s ease forwards; animation-delay: 2s; }
+        #intro-start-btn { opacity: 0; animation: fadeInTextSimple 1.5s ease forwards; animation-delay: 2.8s; }
+
+        /* CAKE SECTION */
+        .cake-container { width: 100%; text-align: center; }
+        .cake-wrapper { position: relative; width: clamp(200px, 60vw, 250px); height: clamp(200px, 60vw, 250px); margin: 0 auto 30px auto; cursor: pointer; touch-action: manipulation; }
+        .cake-base { position: absolute; bottom: 10px; width: 100%; height: 36%; background: #614135; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+        .cake-base::after { content: ''; position: absolute; top: 15px; left: 0; width: 100%; height: 25px; background: #ff9233; opacity: 0.8; }
+        .cake-top { position: absolute; bottom: 36%; left: 10%; width: 80%; height: 28%; background: #ff5e7e; border-radius: 15px 15px 0 0; }
+        .candle { position: absolute; bottom: 64%; left: 47%; width: 14px; height: 45px; background: linear-gradient(to right, #00f6ff, #0066ff); border-radius: 4px; }
+        .flame { position: absolute; top: -20px; left: -3px; width: 20px; height: 23px; background: #ff9233; border-radius: 50%; box-shadow: 0 0 20px #ff9233; animation: flicker 0.6s infinite alternate; }
+        .cake-wrapper.cut .flame { display: none; }
+        .celebration-element { position: absolute; font-size: clamp(1.5rem, 5vw, 2.2rem); bottom: -50px; z-index: 1000; pointer-events: none; animation: floatUp 4s linear forwards; }
+
+        /* SPINNER */
+        .wheel-container { position: relative; margin: 15px auto; width: clamp(230px, 70vw, 280px); height: clamp(230px, 70vw, 280px); }
+        .wheel { width: 100%; height: 100%; border-radius: 50%; border: 6px solid #fff; position: relative; overflow: hidden; transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: conic-gradient(#ff5e7e 0deg 90deg, #ff9233 90deg 180deg, #33cdff 180deg 270deg, #b833ff 270deg 360deg); }
+        .wheel-pointer { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 22px solid #fff; z-index: 10; }
+        
+        /* SCRATCH / WISH CARDS */
+        .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 8px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; width: 100%; max-width: 1100px; margin-bottom: 20px; margin-top: 15px; }
+        .wish-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 18px; position: relative; overflow: hidden; min-height: 190px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; transition: transform 0.3s; }
+        .wish-card::before { content: attr(data-emoji) " Tap to Reveal ✨"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #3a3747, #211f2b); color: #ffffff; font-size: 1rem; font-weight: 600; display: flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center; z-index: 5; transition: opacity 0.4s; border-radius: 18px; border: 2px dashed rgba(255, 94, 126, 0.4); text-align: center; padding: 10px; }
+        .wish-card.scratched::before, .wish-card:active::before { opacity: 0; pointer-events: none; }
+        .wish-card h3 { color: #ff9233; margin-bottom: 8px; font-size: clamp(1rem, 3.5vw, 1.2rem); }
+        .wish-card p { font-size: clamp(0.85rem, 3vw, 0.95rem); line-height: 1.5; color: #e1e1e6; }
+
+        /* GALLERY */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; width: 100%; max-width: 1100px; margin-bottom: 20px; margin-top: 15px; }
+        .gallery-item { position: relative; height: clamp(180px, 45vw, 280px); border-radius: 14px; overflow: hidden; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: all 0.3s ease; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Polaroid Photo Booth Design */
+        .polaroid-frame {
+            background: white; padding: 12px 12px 45px 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            border-radius: 4px; display: none;
+            width: clamp(220px, 75vw, 280px); max-width: 100%;
+            transform: rotate(-2deg); margin: 20px auto;
+            position: relative; animation: fadeInPhoto 1s ease forwards;
+        }
+        .polaroid-frame img { width: 100%; height: clamp(200px, 65vw, 250px); object-fit: cover; border: 1px solid #ddd; }
+        .polaroid-caption {
+            position: absolute; bottom: 10px; left: 0; width: 100%;
+            text-align: center; font-family: 'Playfair Display', serif;
+            font-size: clamp(0.9rem, 3vw, 1.1rem); color: #333; font-weight: bold;
+        }
+
+        /* Lightbox Modal */
+        .lightbox { display: none; position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(11, 9, 20, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; padding: 10px; }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox img { max-width: 95%; max-height: 80vh; border-radius: 12px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #ffffff; font-size: 35px; font-weight: bold; cursor: pointer; }
+
+        /* WhatsApp Button */
+        .whatsapp-btn { background: #25D366; color: white; padding: 12px 24px; font-size: clamp(0.85rem, 3vw, 1rem); font-weight: 600; border-radius: 50px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
+
+        @keyframes fadeInPhoto { 0% { opacity: 0; transform: scale(0.7) rotate(-10deg); } 100% { opacity: 1; transform: scale(1) rotate(-2deg); } }
+        @keyframes fadeInUpText { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInTextSimple { 0% { opacity: 0; } 100% { opacity: 1; } }
+        @keyframes flicker { 0% { transform: scale(1); } 100% { transform: scale(1.15) rotate(3deg); } }
+        @keyframes floatUp { 0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 1; } 100% { transform: translateY(-105vh) translateX(var(--drift)) scale(1.2); opacity: 0; } }
+
+        /* Mobile Adjustments for Small Screens */
+        @media (max-width: 480px) {
+            .page-section { padding-top: 80px; }
+            .dual-photos { gap: 10px; }
+            .grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <nav>
+        <div class="logo">Double Birthday Bash 🎮🎉</div>
+        <button class="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+    </nav>
+
+    <!-- STAGE 0: BALLOON POPPING TASK -->
+    <section id="task-balloon" class="page-section active">
+        <div class="balloon-clicker-zone">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 5vw, 2.2rem);">Hold On! 🛑</h2>
+            <p style="color: #b3b3ba; margin-top: 8px; font-size: clamp(0.85rem, 3vw, 1rem);">Double Celebration Site Unlock karne ke liye balloon ko 15 baar tap karo!</p>
+            <div class="balloon-target" id="game-balloon" onclick="tapBalloon()"></div>
+            <div class="click-counter" id="balloon-counter">Clicks Left: 15</div>
+        </div>
+    </section>
+
+    <!-- STAGE 1: CINEMATIC INTRO SCREEN (DOUBLE BIRTHDAY) -->
+    <section id="stage-intro" class="page-section">
+        <div class="intro-container">
+            <div class="dual-photos">
+                <div class="intro-photo-wrapper">
+                    <div class="intro-photo-frame">
+                        <img src="bhaiya.jpg" alt="Bhaiya">
+                        <div class="person-tag">Bhaiya 👑</div>
+                    </div>
+                </div>
+                <div class="intro-photo-wrapper right">
+                    <div class="intro-photo-frame">
+                        <img src="bhatiji.jpg" alt="Aditi">
+                        <div class="person-tag">Aditi 👸</div>
+                    </div>
+                </div>
+            </div>
+            <div class="intro-text-wrapper">
+                <h1>Happy Birthday <span class="pink">Bhaiya</span> & <span class="blue">Aditi</span>! 🎉</h1>
+                <p>Aapke chote bhai aur chacha ki taraf se ye ek chota sa surprise! Ek hi din me do sabse special logon ka birthday celebration... Aage dekhte hain kya-kya surprises hain!</p>
+            </div>
+            <button class="action-btn" id="intro-start-btn" onclick="goToStage('stage-cake')">Start Celebration 🎉</button>
+        </div>
+    </section>
+
+    <!-- STAGE 2: CAKE CUTTING SCREEN -->
+    <section id="stage-cake" class="page-section">
+        <div class="cake-container">
+            <h2 class="section-title" id="cake-status-text">Blow the Candle & Cut the Cake! 🎂</h2>
+            <p style="color: #b3b3ba; margin-bottom: 20px; font-size: clamp(0.85rem, 3vw, 1rem);">Cake par tap karke candle bujhaiye aur cake katiye!</p>
+            <div class="cake-wrapper" id="birthday-cake" onclick="cutCake()">
+                <div class="candle"><div class="flame"></div></div>
+                <div class="cake-top"></div>
+                <div class="cake-base"></div>
+            </div>
+            <button class="action-btn next-trigger-btn" id="to-spinner-btn" style="display:none;" onclick="goToStage('task-spinner')">Spin Birthday Wheel 🎡</button>
+        </div>
+    </section>
+
+    <!-- STAGE 2.5: LUCKY SPINNER TASK -->
+    <section id="task-spinner" class="page-section">
+        <h2 class="section-title">The Lucky Spinner Wheel 🎡</h2>
+        <p style="color: #b3b3ba; text-align: center; margin-bottom: 15px; font-size: clamp(0.85rem, 3vw, 1rem);">Apna birthday fun task dekhne ke liye wheel spin karo!</p>
+        <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <div class="wheel" id="lucky-wheel"></div>
+        </div>
+        <button class="action-btn" id="spin-btn" onclick="spinWheel()">Spin the Wheel! 🚀</button>
+        <h3 id="spin-result" style="margin-top: 20px; color: #ff9233; min-height: 30px; font-size: clamp(1rem, 3.5vw, 1.2rem); text-align:center;"></h3>
+        <button class="action-btn" id="to-thoughts-btn" style="display: none;" onclick="goToStage('stage-thoughts')">Read Secret Messages 💌</button>
+    </section>
+
+    <!-- STAGE 3: THOUGHTS & WISHES SCREEN (CHACHA - BHATIJI & BHAI CONTEXT) -->
+    <section id="stage-thoughts" class="page-section">
+        <h2 class="section-title">Special Birthday Wishes 💌</h2>
+        <p style="color: #ff9233; margin-bottom: 15px; text-align: center; font-size: clamp(0.85rem, 3vw, 1rem);">👇 Cards par click/tap karke secret messages padhein!</p>
+        
+        <div class="grid">
+            <div class="wish-card" data-emoji="👑" onclick="this.classList.add('scratched')">
+                <h3>For My Elder Brother (Bhaiya) 💙</h3>
+                <p>"Bhaiya, aap mere liye hamesha ek hero aur guide rahe ho. Mujhe har mor par sambhalne se lekar ek bada bhai aur dost banne tak, aapne hamesha mera sath diya hai. Ek chote bhai ke liye aap jaisa bhaiya milna sabse badi kismat ki baat hai. Happy Birthday Bhaiya!"</p>
+            </div>
+
+            <div class="wish-card" data-emoji="👸" onclick="this.classList.add('scratched')">
+                <h3>For My Sweet Bhatiji (Aditi) 💖</h3>
+                <p>"Meri pyaari bhatiji Aditi ko Chacha ki taraf se Happy Birthday! Jab se tu hamari life me aayi hai, ghar me har din ek tyohar jaisa lagta hai. Teri cute si batein aur hassi pooray ghar ki rounak hai. Aise hi hamesha khilkhilati reh meri jaan!"</p>
+            </div>
+
+            <div class="wish-card" data-emoji="🤜🤛" onclick="this.classList.add('scratched')">
+                <h3>Bhai-Bhai Bonding 💪</h3>
+                <p>"Bhaiya, life me chahe kitni bhi responsibilities aa jayein, lekin hum dono ki ye bonding aur bhai-bhai ka swag hamesha waisa hi rahega. Aap bas aage badhte raho, aapka ye chota bhai hamesha aapke sath khada hai!"</p>
+            </div>
+
+            <div class="wish-card" data-emoji="🍭" onclick="this.classList.add('scratched')">
+                <h3>Chacha-Bhatiji Special Bond 🎈</h3>
+                <p>"Aditi, tu kitni bhi badi ho jaye, apne Chacha ke liye hamesha wahi choti si princess rahegi! Tujhe jo bhi chahiye ho—chocolates, toys ya ghoomna—Chacha se maangne me kabhi mat hichkichana. God bless you my angel!"</p>
+            </div>
+
+            <div class="wish-card" data-emoji="✨" onclick="this.classList.add('scratched')">
+                <h3>Prayers & Blessings 🌟</h3>
+                <p>"Bhagwan se yahi prarthana hai ki Bhaiya ko unki mehnat ka har fal mile aur Aditi ko duniya ki saari khushiyan aur safalta mile. Aap dono ki ye jodi hamare ghar ki sabse badi khushi hai. Happy Birthday to Both of You!"</p>
+            </div>
+
+            <div class="wish-card" data-emoji="🍕" onclick="this.classList.add('scratched')">
+                <h3>Party Demand From Chacha 😋</h3>
+                <p>"Wishes to ho gayi... Ab direct mudde par aate hain! Bhaiya, aaj aapka aur Aditi ka birthday hai to ek zabardast party to banti hai! Shaam ko mast dinner aur treats ready rakhna. No excuses today!"</p>
+            </div>
+        </div>
+        <button class="action-btn" onclick="goToStage('stage-gallery')">View Photo Gallery 📸</button>
+    </section>
+
+    <!-- STAGE 4: MEMORIES GALLERY -->
+    <section id="stage-gallery" class="page-section">
+        <h2 class="section-title">Precious Memories 📸</h2>
+        <p style="color: #b3b3ba; text-align: center; margin-bottom: 15px; font-size: clamp(0.85rem, 3vw, 1rem);">Photos par tap karke zoom karke dekhein! ✨</p>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="photo1.jpg" alt="Memory 1"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="photo2.jpg" alt="Memory 2"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="photo3.jpg" alt="Memory 3"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="photo4.jpg" alt="Memory 4"></div>
+        </div>
+
+        <button class="action-btn" onclick="goToStage('stage-selfie')">Go to Selfie Booth 📸✨</button>
+    </section>
+
+    <!-- STAGE 5: PHOTO BOOTH / SELFIE ZONE -->
+    <section id="stage-selfie" class="page-section">
+        <h2 class="section-title">Birthday Selfie Booth 📸</h2>
+        <p style="color: #b3b3ba; text-align: center; max-width: 600px; margin-bottom: 15px; font-size: clamp(0.85rem, 3vw, 1rem);">
+            Aakhiri surprise! Ek mast selfie lijiye jo is birthday memory book me hum hamesha ke liye save kar sakein!
+        </p>
+
+        <input type="file" id="selfie-capture" accept="image/*" capture="user" style="display: none;" onchange="processSelfie(event)">
+        
+        <button class="action-btn" id="capture-trigger-btn" onclick="triggerCamera()">✨ Open Camera / Upload Photo</button>
+
+        <div class="polaroid-frame" id="polaroid-result">
+            <img id="selfie-preview" src="" alt="Selfie">
+            <div class="polaroid-caption">Double Celebration ✨ 2026</div>
+        </div>
+
+        <div id="final-share-zone" style="display: none; text-align: center; margin-top: 15px;">
+            <p style="color: #ff9233; font-weight: 600; margin-bottom: 8px; font-size: clamp(0.85rem, 3vw, 1rem);">🎉 Photo taiyar hai! WhatsApp par bhej kar share karein!</p>
+            <a href="https://wa.me/?text=Maine%20website%20par%20apni%20Birthday%20Selfie%20click%20kar%20li%20hai!%20📸🥳" target="_blank" class="whatsapp-btn">
+                💬 Share Photo on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal Container -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <img id="lightbox-img" src="" alt="Enlarged Memory">
+    </div>
+
+    <script>
+        // Music Controller
+        let isMusicStarted = false;
+
+        function startMusicAutomatically() {
+            var music = document.getElementById("bg-music");
+            var btn = document.querySelector(".music-btn");
+            if (!isMusicStarted) {
+                music.play().then(() => {
+                    isMusicStarted = true;
+                    btn.innerHTML = "⏸️ Pause Music";
+                }).catch(e => {
+                    console.log("Autoplay waiting for tap");
+                });
+            }
+        }
+
+        function toggleMusic() {
+            var music = document.getElementById("bg-music");
+            var btn = document.querySelector(".music-btn");
+            if (music.paused) { 
+                music.play().catch(e => {}); 
+                btn.innerHTML = "⏸️ Pause Music"; 
+                isMusicStarted = true;
+            } else { 
+                music.pause(); 
+                btn.innerHTML = "🎵 Play Music"; 
+            }
+        }
+
+        // Navigation
+        function goToStage(stageId) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(stageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Balloon Clicker Game
+        let clicksLeft = 15;
+        let balloonScale = 1;
+        function tapBalloon() {
+            startMusicAutomatically();
+
+            clicksLeft--;
+            balloonScale += 0.06;
+            const balloon = document.getElementById('game-balloon');
+            const counter = document.getElementById('balloon-counter');
+            balloon.style.transform = `scale(${balloonScale})`;
+            counter.innerHTML = `Clicks Left: ${clicksLeft}`;
+            
+            if(clicksLeft <= 0) {
+                balloon.style.display = 'none';
+                counter.innerHTML = "BOOM! 🎉 POPPING!";
+                let blastTimer = setInterval(createCelebrationParticle, 50);
+                setTimeout(() => { clearInterval(blastTimer); goToStage('stage-intro'); }, 2000); 
+            }
+        }
+
+        // Cake Cutting
+        let celebrationInterval;
+        function cutCake() {
+            const cake = document.getElementById('birthday-cake');
+            if (!cake.classList.contains('cut')) {
+                cake.classList.add('cut');
+                document.getElementById('cake-status-text').innerHTML = "Yayyy! Happy Birthday Bhaiya & Aditi! 🥳✨";
+                document.getElementById('to-spinner-btn').style.display = "inline-block";
+                celebrationInterval = setInterval(createCelebrationParticle, 150);
+                setTimeout(() => clearInterval(celebrationInterval), 6000);
+            }
+        }
+
+        // Celebration Particles
+        function createCelebrationParticle() {
+            const items = ['🎈', '🎉', '✨', '🥳', '💥', '💖', '👑', '🎂', '🎁'];
+            const p = document.createElement('div');
+            p.classList.add('celebration-element'); 
+            p.innerHTML = items[Math.floor(Math.random() * items.length)];
+            p.style.left = Math.random() * 95 + "vw";
+            p.style.setProperty('--drift', (Math.random() * 160 - 80) + "px");
+            p.style.animationDuration = (Math.random() * 1.5 + 1.5) + "s";
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 3000);
+        }
+
+        // Spinner Logic
+        let hasSpun = false;
+        function spinWheel() {
+            if (hasSpun) return;
+            hasSpun = true;
+            const wheel = document.getElementById('lucky-wheel');
+            const targetedStopDegrees = 1440 + 45; 
+            wheel.style.transform = `rotate(${targetedStopDegrees}deg)`;
+            document.getElementById('spin-btn').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('spin-result').innerHTML = "Task Locked: 👑 Sabko Birthday Party Treat Dena Hoga! 🍕🎉";
+                document.getElementById('to-thoughts-btn').style.display = 'inline-block';
+            }, 4100);
+        }
+
+        // Photo Booth
+        function triggerCamera() {
+            document.getElementById('selfie-capture').click();
+        }
+
+        function processSelfie(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('selfie-preview').src = e.target.result;
+                    document.getElementById('polaroid-result').style.display = 'block';
+                    document.getElementById('final-share-zone').style.display = 'block';
+                    document.getElementById('capture-trigger-btn').innerHTML = "📸 Retake Photo";
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Lightbox Zoom
+        function openLightbox(element) {
+            var lightbox = document.getElementById("lightbox");
+            var lightboxImg = document.getElementById("lightbox-img");
+            var clickedImgSrc = element.querySelector("img").src;
+            lightboxImg.src = clickedImgSrc;
+            lightbox.classList.add("active");
+        }
+        function closeLightbox() {
+            var lightbox = document.getElementById("lightbox");
+            lightbox.classList.remove("active");
+        }
+
+        // Fallback for user click anywhere to trigger music
+        window.addEventListener('click', function() {
+            startMusicAutomatically();
+        }, { once: true });
+    </script>
+</body>
+</html>
